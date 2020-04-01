@@ -1,0 +1,44 @@
+#! /bin/python3
+# -*- coding: Utf-8 -*
+
+import sys
+from calculation import titration
+
+def print_help():
+    print("USAGE")
+    print("\t" + "./109titration file" + "\n")
+    print("DESCRIPTION")
+    print("\t" + "file" + "\t" + " a csv file containing \"vol;ph\" lines")
+    return 0
+
+def valid_line(line: list):
+    if len(line) != 2:
+        return False
+    first = line[0]
+    second = line[1]
+    try:
+        if float(first) < 0:
+            return False
+        if float(second) < 0:
+            return False
+    except ValueError:
+        return False
+    return True
+
+def main(argc: int, argv: list):
+    if argc == 2 and argv[1] == "-h":
+        return print_help()
+    if argc != 2 or not argv[1].endswith(".csv"):
+        return 84
+    try:
+        with open(argv[1], "r") as csv:
+            values = list(line.split(";") for line in csv.read().splitlines())
+    except Exception:
+        return 84
+    if any(not valid_line(line) for line in values):
+        return 84
+    values = list((float(volume), float(ph)) for volume, ph in values)
+    return titration(values)
+
+if __name__ == "__main__":
+    sys.exit(main(len(sys.argv), sys.argv.copy()))
