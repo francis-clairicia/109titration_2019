@@ -24,14 +24,14 @@ def get_first_derivatives(values: list):
 
 def get_second_derivatives(values: list, equivalent_volume: int):
     d_list = list()
-    bounds = tuple()
+    bounds_index = tuple()
     for i in range(1, len(values) - 1):
         volume = values[i][0]
         d = derivative_point(values[i], values[i - 1], values[i + 1])
         d_list.append((volume, d))
         if volume == equivalent_volume:
-            bounds = (len(d_list) - 2, len(d_list) - 1, len(d_list))
-    return d_list, tuple(d_list[bounds[j]] for j in range(len(bounds)))
+            bounds_index = (len(d_list) - 2, len(d_list) - 1, len(d_list))
+    return d_list, tuple(d_list[i] for i in bounds_index)
 
 def get_estimated_second_derivatives(bounds: tuple):
     first, second, third = bounds
