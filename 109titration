@@ -17,7 +17,7 @@ def valid_line(line: list):
     first = line[0]
     second = line[1]
     try:
-        if float(first) <= 0:
+        if float(first) < 0:
             return False
         if float(second) < 0:
             return False
