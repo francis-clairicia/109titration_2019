@@ -63,7 +63,7 @@ def titration(values: list):
     print("Second derivative:")
     try:
         second_derivatives, bounds = get_second_derivatives(derivatives, equivalent_volume)
-    return ZeroDivisionError:
+    except ZeroDivisionError:
         return 84
     for volume, k in second_derivatives:
         print(f"{volume} ml -> {k:.2f}")
