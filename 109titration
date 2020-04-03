@@ -17,7 +17,7 @@ def valid_line(line: list):
     first = line[0]
     second = line[1]
     try:
-        if float(first) < 0:
+        if float(first) <= 0:
             return False
         if float(second) < 0:
             return False
@@ -33,6 +33,8 @@ def main(argc: int, argv: list):
     try:
         with open(argv[1], "r") as csv:
             values = list(line.split(";") for line in csv.read().splitlines())
+        if len(values) == 0:
+            return 84
     except Exception:
         return 84
     if any(not valid_line(line) for line in values):
