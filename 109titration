@@ -17,7 +17,7 @@ def valid_line(line: list):
     first = line[0]
     second = line[1]
     try:
-        if float(first) <= 0:
+        if float(first) < 0:
             return False
         if float(second) < 0:
             return False
@@ -29,16 +29,16 @@ def main(argc: int, argv: list):
     if argc == 2 and argv[1] == "-h":
         return print_help()
     if argc != 2 or not argv[1].endswith(".csv"):
-        return 84
+        return 80
     try:
         with open(argv[1], "r") as csv:
             values = list(line.split(";") for line in csv.read().splitlines())
         if len(values) == 0:
-            return 84
+            return 81
     except Exception:
-        return 84
+        return 82
     if any(not valid_line(line) for line in values):
-        return 84
+        return 83
     values = list((float(volume), float(ph)) for volume, ph in values)
     return titration(values)
 

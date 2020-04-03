@@ -24,20 +24,28 @@ def get_first_derivatives(values: list):
 
 def get_second_derivatives(values: list, equivalent_volume: int):
     d_list = list()
-    bounds_index = tuple()
+    bounds_index = list()
     for i in range(1, len(values) - 1):
         volume = values[i][0]
         d = derivative_point(values[i], values[i - 1], values[i + 1])
         d_list.append((volume, d))
         if volume == equivalent_volume:
-            bounds_index = (len(d_list) - 2, len(d_list) - 1, len(d_list))
+            bounds_index = [len(d_list) - 2, len(d_list) - 1, len(d_list)]
+    while any(index >= len(d_list) for index in bounds_index):
+        del bounds_index[-1]
     return d_list, tuple(d_list[i] for i in bounds_index)
 
 def get_estimated_second_derivatives(bounds: tuple):
-    first, second, third = bounds
-    x_a, y_a = first
-    x_b, y_b = second
-    x_c, y_c = third
+    print(bounds)
+    if len(bounds) == 3:
+        first, second, third = bounds
+        x_a, y_a = first
+        x_b, y_b = second
+        x_c, y_c = third
+    else:
+        first, second = bounds
+        x_a, y_a = first
+        x_c, y_c = x_b, y_b = second
     x = x_a
     d_list = list()
     while x <= x_c:
@@ -61,7 +69,10 @@ def titration(values: list):
     second_derivatives, bounds = get_second_derivatives(derivatives, equivalent_volume)
     for volume, k in second_derivatives:
         print(f"{volume} ml -> {k:.2f}")
-    second_derivatives_estimated, equivalent_volume = get_estimated_second_derivatives(bounds)
+    if len(second_derivatives) > 1:
+        second_derivatives_estimated, equivalent_volume = get_estimated_second_derivatives(bounds)
+    else:
+        second_derivatives_estimated, equivalent_volume = second_derivatives, second_derivatives[0][0]
     print()
     print("Second derivative estimated:")
     for volume, k in second_derivatives_estimated:
