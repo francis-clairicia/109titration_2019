@@ -51,17 +51,26 @@ def get_estimated_second_derivatives(bounds: tuple):
 
 def titration(values: list):
     print("Derivative:")
-    derivatives, equivalent_volume = get_first_derivatives(values)
+    try:
+        derivatives, equivalent_volume = get_first_derivatives(values)
+    except ZeroDivisionError:
+        return 84
     for volume, k in derivatives:
         print(f"{volume} ml -> {k:.2f}")
     print()
     print(f"Equivalence point at {equivalent_volume} ml")
     print()
     print("Second derivative:")
-    second_derivatives, bounds = get_second_derivatives(derivatives, equivalent_volume)
+    try:
+        second_derivatives, bounds = get_second_derivatives(derivatives, equivalent_volume)
+    return ZeroDivisionError:
+        return 84
     for volume, k in second_derivatives:
         print(f"{volume} ml -> {k:.2f}")
-    second_derivatives_estimated, equivalent_volume = get_estimated_second_derivatives(bounds)
+    try:
+        second_derivatives_estimated, equivalent_volume = get_estimated_second_derivatives(bounds)
+    except ZeroDivisionError:
+        return 84
     print()
     print("Second derivative estimated:")
     for volume, k in second_derivatives_estimated:

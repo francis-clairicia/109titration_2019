@@ -37,20 +37,8 @@ def main(argc: int, argv: list):
             return 84
     except Exception:
         return 84
-    # if any(not valid_line(line) for line in values):
-    #     return 83
-    for line in values:
-        if len(line) != 2:
-            return 84
-        first = line[0]
-        second = line[1]
-        try:
-            if float(first) < 0:
-                return 85
-            if float(second) < 0:
-                return 84
-        except ValueError:
-            return 84
+    if any(not valid_line(line) for line in values):
+        return 84
     values = list((float(volume), float(ph)) for volume, ph in values)
     return titration(values)
 
